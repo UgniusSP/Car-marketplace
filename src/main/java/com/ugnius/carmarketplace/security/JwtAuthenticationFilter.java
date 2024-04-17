@@ -18,12 +18,14 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class JwtFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
         if(request.getServletPath().contains("/api/v1/auth")){
             filterChain.doFilter(request,response);
             return;
@@ -39,8 +41,10 @@ public class JwtFilter extends OncePerRequestFilter {
         }
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
+
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+
             if(jwtService.isTokenValid(jwt, userDetails)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,

@@ -1,6 +1,5 @@
 package com.ugnius.carmarketplace.security;
 
-import com.ugnius.carmarketplace.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
-    private final JwtFilter jwtAuthFilter;
+    private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
     @Bean

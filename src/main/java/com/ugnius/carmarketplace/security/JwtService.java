@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,7 +46,7 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    private String generateToken(Map<String, Object> claims, UserDetails userDetails) {
+    public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
 
         return buildToken(claims, userDetails, jwtExpiration);
     }
